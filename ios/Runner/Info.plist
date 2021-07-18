@@ -43,5 +43,16 @@
 	<false/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Grant Ecodeem permission to authenticate your account with your bio-metric auth.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Grant Ecodeem permission to select and upload image,video and file post from your local storage.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Grant Ecodeem permission to select and upload image,video and file post from your camare.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Grant Ecodeem permission to select and upload  post with audio.</string>
+	<key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
 </dict>
 </plist>

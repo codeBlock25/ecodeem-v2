@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:ecodeem/api/api.dart';
 import 'package:ecodeem/components/app_header.dart';
 import 'package:ecodeem/components/text_field.dart';
@@ -68,8 +66,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 10.sp,
                         ),
                         Container(
-                          width: 100.w / 2.3,
-                          height: 100.w / 2.3,
+                          width: (100.w / 2.3).clamp(150, 220),
+                          height: (100.w / 2.3).clamp(150, 220),
                           margin: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100.w),
@@ -83,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Center(
                               child: Icon(
                                 Ionicons.person,
-                                size: 100.w / 8,
+                                size: 30.sp.clamp(50, 100),
                                 color: primaryColor,
                               ),
                             ),
@@ -91,10 +89,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         Center(
                           child: Text(
-                            'get started with your account today'.toUpperCase(),
+                            'get started with your\n account today'
+                                .toUpperCase(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 100.w / 18.89,
+                              fontSize: 20.sp.clamp(20, 30),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -329,13 +328,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                                minimumSize: MaterialStateProperty.all(
-                                    Size(min(100.w / 1.656, 500), 50))),
+                                minimumSize: MaterialStateProperty.all(Size(
+                                  60.w.clamp(200, 350),
+                                  40.sp.clamp(50, 80),
+                                ))),
                             child: Text(
                               'REGISTER',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 100.w / 29.89,
+                                  fontSize: 14.sp.clamp(14, 24),
                                   fontWeight: FontWeight.bold),
                             )),
                         const SizedBox(
@@ -344,10 +345,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         RichText(
                           text: TextSpan(
                               text: 'Already have an account? ',
-                              style: const TextStyle(
-                                  color: Color(0xfF393939),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14),
+                              style: TextStyle(
+                                color: const Color(0xfF393939),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12.sp.clamp(12, 20),
+                              ),
                               children: <TextSpan>[
                                 TextSpan(
                                     text: 'Login',
@@ -380,12 +382,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         alignment: Alignment.topCenter,
                         child: Container(
                           width: 90.w,
-                          height: 70.h,
-                          margin: EdgeInsets.only(top: 50.sp),
+                          height: 80.h,
+                          margin: EdgeInsets.only(top: 5.h),
                           padding: EdgeInsets.symmetric(horizontal: 10.sp),
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(10.sp)),
+                              borderRadius:
+                                  BorderRadius.circular(10.sp.clamp(5, 10))),
                           child: Column(
                             children: <Widget>[
                               Padding(
@@ -393,7 +396,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 child: Text(
                                   'User Agreement'.toUpperCase(),
                                   style: TextStyle(
-                                      fontSize: 14.sp,
+                                      fontSize: 14.sp.clamp(16, 24),
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -405,7 +408,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'Ecodeem is platform that enables individuals with an unrivaled access to a community of like-minded people, passionate about a better and more sustainable world. This enabling environment also serves as gateway for individuals to raise funds in order to finance their business ideas and initiatives, share posts and event targeting the Sustainable Development Goals (SDGs), buy and sell products, amongst other exciting features and activities.',
                                       style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                       ),
                                     ),
                                     SizedBox(
@@ -414,7 +417,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'We are grateful to all our users, supporters, partners and donors who help us take a step closer to fulfilling the global goals and get things done in driving sustainable change across our continent in a fun and exhilarating way. Ecodeem recognize that your personal details should be protected at all costs. With accountability and transparency being part of our core values, we strive to augment not only the quality of our initiatives, but also secure the trust and level of commitment you have invested in us. Hence, these Terms shall explain the measure we put in place to respect and preserve your personal information and privacy preferences. Additionally, the Terms will also govern your usage of Ecodeem in order to ensure a safe environment for all parties involved.',
                                       style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                       ),
                                     ),
                                     SizedBox(
@@ -423,7 +426,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'Ecodeem is committed to protecting your personal data. By downloading our app and/or submitting your personal data to us, you agree that: ',
                                       style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                       ),
                                     ),
                                     ListTile(
@@ -440,7 +443,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'You consent to the practice described in this policy',
                                           style: TextStyle(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black),
                                         )),
                                     ListTile(
@@ -457,7 +460,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Ecodeem may use the information provided in accordance with this policy',
                                           style: TextStyle(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black),
                                         )),
                                     ListTile(
@@ -474,7 +477,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'If you reside outside Nigeria, you consent to have your personal data be processed in countries were the laws pertaining to processing of personal information may not be as strict as those laws in your country.',
                                           style: TextStyle(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black),
                                         )),
                                     ListTile(
@@ -491,7 +494,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'This policy dose not apply to information collected through other means such as by telephone, or in person; although, any such information may be protected by other policies.',
                                           style: TextStyle(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black),
                                         )),
                                     SizedBox(
@@ -500,7 +503,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'YOUR PERSONAL INFORMATION'.toUpperCase(),
                                       style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -510,7 +513,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'Personal data includes all information about an identified or unidentified individual. There are a number of areas on our site you may be required to provide details like your name, phone number, email address, etc. you are under no obligation to provide us with your personal information if you do not wish to; however, that may limit your experience in terms of accessing certain functions and features of site/app, or requests to certain services or information.',
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                       ),
                                     ),
                                     SizedBox(
@@ -519,7 +522,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'This app collects data either provided by provided by you directly as well as data from a third party, or automatically through your use of our site/app. The reasons we gather these information is to:',
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                       ),
                                     ),
                                     SizedBox(
@@ -539,7 +542,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Allow us enhance our work quality',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -556,7 +559,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Keep you informed on our activity',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -573,7 +576,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Respond to your inquiries and provide assistance where necessary',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -590,7 +593,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Let you have a personalize experience on our app',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -607,7 +610,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Respond to an email or particular request from you',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -624,7 +627,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Process any application requested by you',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -641,7 +644,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Run surveys and promotions',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -658,7 +661,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Offer you information that we believe may be useful  to you, such as information about health products or services provided by us or other businesses',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -675,7 +678,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Perform analytics and to improve our app, products, and advertising',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -692,7 +695,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Facilitate compliance with applicable laws, regulations, and legal processes',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -709,7 +712,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Protect our rights, the rights of affiliates or related third parties, or take appropriate legal action, such as to enforce our Terms of Use.',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     ListTile(
@@ -726,7 +729,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         title: Text(
                                           'Retain a record of our transactions and communications, etc.',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                           ),
                                         )),
                                     SizedBox(
@@ -740,8 +743,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                           TextSpan(
                                               text:
                                                   'www.aboutads.info/consumers',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   color: Colors.blue,
+                                                  fontSize: 12.sp.clamp(14, 20),
                                                   decoration:
                                                       TextDecoration.underline,
                                                   decorationColor: Colors.blue),
@@ -755,7 +759,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   ' for more information about these third party advertising networks and entitles using similar technologies. We also use cookies to collect standard internal log on information and details of visitor behavior patterns (e,.g. monitoring of the number of visitors on  various sections of the app).  This allows us evaluate and improve on app content and overall user experience.'),
                                         ],
                                         style: TextStyle(
-                                            fontSize: 10.sp,
+                                            fontSize: 12.sp.clamp(14, 20),
                                             color: Colors.black),
                                       ),
                                     ),
@@ -764,7 +768,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                     Text(
                                       'Analytics:  we may use analytics companies to gather data from app views such as pages visited, frequency of visit, etc.; to improve our site/app features. We do not attempt to monitor or uncover the identities of our users via their personal information.',
-                                      style: TextStyle(fontSize: 12.sp),
+                                      style: TextStyle(
+                                        fontSize: 12.sp.clamp(14, 20),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 15.sp,
@@ -773,7 +779,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       'HOW DO WE PROTECT YOUR INFORMATION?'
                                           .toUpperCase(),
                                       style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -782,7 +788,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                                     Text(
                                       'Personal data includes all information about an identified or unidentified individual. There are a number of areas on our app you may be required to provide details like your name, phone number, email address, etc. you are under no obligation to provide to us with your personal information if you do not wish to; however, that may limit your experience in terms of accessing certain functions and features of the site/app, or requests to certain services or information. We have made it our point of duty to set up appropriate technical and organizational measures to protect your personal details. For instance, our network is protected and examined routinely. We regularly review person(s) with access to information we have aggregated to ensure your personal data is only handled and accessible to appropriately trained personnel, volunteers and contractors. A contract is put in place for external entities employed for either data collection or processing. Nevertheless, we maintain reasonable administrative, technical and physical safeguards designed to protect the information you have provided on the app. However, no system is 100% fail proof and we cannot guarantee that the information supplied will not be illegally intercepted during transmission via internet, and Ecodeem will not be held liable for the illegal actions of such criminal third parties and hackers.',
-                                      style: TextStyle(fontSize: 12.sp),
+                                      style: TextStyle(
+                                        fontSize: 12.sp.clamp(14, 20),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 15.sp,
@@ -791,7 +799,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       'OBJECTIONABLE CONTENT AND/OR ABUSIVE USERS'
                                           .toUpperCase(),
                                       style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -801,7 +809,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     RichText(
                                         text: TextSpan(
                                             style: TextStyle(
-                                                fontSize: 10.sp,
+                                                fontSize: 12.sp.clamp(14, 20),
                                                 color: Colors.black),
                                             children: <TextSpan>[
                                           const TextSpan(
@@ -832,7 +840,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'We have made provision for you to block users should you find any users abusive in our chat platform.',
                                       style: TextStyle(
-                                          fontSize: 10.sp, color: Colors.black),
+                                          fontSize: 12.sp.clamp(14, 20),
+                                          color: Colors.black),
                                     ),
                                     SizedBox(
                                       height: 10.sp,
@@ -840,7 +849,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     RichText(
                                         text: TextSpan(
                                             style: TextStyle(
-                                                fontSize: 10.sp,
+                                                fontSize: 12.sp.clamp(14, 20),
                                                 color: Colors.black),
                                             text:
                                                 'Should you notice any issues relating to Obtainable Content and/or Abusive Users that we didn’t cater for. Please contact us at ',
@@ -866,7 +875,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'We have made provision for you to edit your interests if you find any posted content under an sdg category objectionable. This service as a method for filtering objectionable content in future.',
                                       style: TextStyle(
-                                          fontSize: 10.sp, color: Colors.black),
+                                          fontSize: 12.sp.clamp(14, 20),
+                                          color: Colors.black),
                                     ),
                                     SizedBox(
                                       height: 15.sp,
@@ -875,7 +885,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       'INFORMATION FOR CHILDREN UNDER 13'
                                           .toUpperCase(),
                                       style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -887,7 +897,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           text:
                                               'We will not intentionally collect any personal data from children under the age of 13 through this app without receiving parental consent. If you think that we have collected personal information from a child under the age of 13 through this app, please contact us at ',
                                           style: TextStyle(
-                                              fontSize: 10.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black),
                                           children: <TextSpan>[
                                             TextSpan(
@@ -918,7 +928,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'DATA STORAGE DETAILS',
                                       style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp.clamp(14, 20),
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -928,7 +938,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'We will only retain data provided to us through the app for as long as required by law or as necessary for whatever purpose it was collected and in accordance with any consent given. However, we may store your personal data for longer than the stipulated storage period when guided by legal jurisdiction; to which we are subject to adhering. In such instances, the data in question will be deleted after the advised time frame elapses. Furthermore, data which may be applicable for statistical analysis will be preserved, in which case we will anonymize it such that the user is unidentifiable.',
                                       style: TextStyle(
-                                          fontSize: 10.sp, color: Colors.black),
+                                          fontSize: 12.sp.clamp(14, 20),
+                                          color: Colors.black),
                                     ),
                                     SizedBox(
                                       height: 15.sp,
@@ -936,7 +947,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'YOUR RIGHT',
                                       style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp.clamp(14, 20),
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -946,7 +957,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'Ecodeem is committed to keeping you apprised on the processing technique of your personal data as far as well as informing you of your rights with 100% transparency. If you require further details of which to exercise your rights do not hesitate to contact us at any time to assuage your concerns.',
                                       style: TextStyle(
-                                          fontSize: 10.sp, color: Colors.black),
+                                          fontSize: 12.sp.clamp(14, 20),
+                                          color: Colors.black),
                                     ),
                                     SizedBox(
                                       height: 15.sp,
@@ -954,7 +966,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       '',
                                       style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp.clamp(14, 20),
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -964,7 +976,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'YOUR DATA AND SOCIAL MEDIA',
                                       style: TextStyle(
-                                        fontSize: 10.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         color: Colors.black,
                                       ),
                                     ),
@@ -974,7 +986,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'When using our app, you can link to social media Platforms like Facebook, Twitter and Instagram to share, Like, Retweet and Post Ecodeem content. Depending on your privacy setting, these activities can adjust in marketing to show you more Ecodeem type contents. You are welcome to post content on our social media services including your comment, pictures and any other information you are interested in making available. Please not that any such content may become public and we cannot restrict usage of such material in a manner that violates this policy, the law or your personal privacy. We neither control other social media platforms and services nor their usage or disclosure of any of your personal data they may have collected from you. For more information on altering such settings please refer to their privacy policy and adjust your preferences.',
                                       style: TextStyle(
-                                        fontSize: 10.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         color: Colors.black,
                                       ),
                                     ),
@@ -984,7 +996,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'COMMUNITY PRINCIPLES',
                                       style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp.clamp(14, 20),
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -994,7 +1006,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'Ecodeem is a platform that allows individuals to freely express themselves, while showcasing their projects and products. We understand that this is an avenue for multiple interactions from people from different social, religious, and cultural background s and we feel passionately about keeping abuse off all our services Owing to this reason, we have formulated a set of guidelines that highlights the types of post which are classified as objectionable content and mechanisms for dealing with users who may otherwise stray from these guidelines.',
                                       style: TextStyle(
-                                        fontSize: 10.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         color: Colors.black,
                                       ),
                                     ),
@@ -1016,7 +1028,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           text: TextSpan(
                                               text: 'Violence: ',
                                               style: TextStyle(
-                                                  fontSize: 10.sp,
+                                                  fontSize: 12.sp.clamp(14, 20),
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black),
                                               children: const <TextSpan>[
@@ -1046,7 +1058,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           text: TextSpan(
                                               text: 'Hazardous Organizations: ',
                                               style: TextStyle(
-                                                  fontSize: 10.sp,
+                                                  fontSize: 12.sp.clamp(14, 20),
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black),
                                               children: const <TextSpan>[
@@ -1076,7 +1088,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           text: TextSpan(
                                               text: 'Harmful Products: ',
                                               style: TextStyle(
-                                                  fontSize: 10.sp,
+                                                  fontSize: 12.sp.clamp(14, 20),
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black),
                                               children: const <TextSpan>[
@@ -1096,7 +1108,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                             text:
                                                 'Nudity and Sexual Activity: ',
                                             style: TextStyle(
-                                                fontSize: 10.sp,
+                                                fontSize: 12.sp.clamp(14, 20),
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black),
                                             children: const <TextSpan>[
@@ -1113,7 +1125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'Ecodeem users can report and flag objectionable content and block abusive profiles. These reports will be directed to the Ecodeem team. To ensure safety and a conducive environment for users, the team acts on these reports within 24 hours. If found to be in violation of Ecodeem’s Terms, the content is removed and the publisher is warned. Furthermore, users who post inappropriate content will be blocked (for a time frame) or banned (permanently): depending on the severity of lewdness of content uploaded.',
                                       style: TextStyle(
-                                        fontSize: 10.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         color: Colors.black,
                                       ),
                                     ),
@@ -1123,7 +1135,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'AMENDMENT OF THESE TERMS',
                                       style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp.clamp(14, 20),
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1133,7 +1145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     RichText(
                                         text: TextSpan(
                                             style: TextStyle(
-                                              fontSize: 10.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black,
                                             ),
                                             text:
@@ -1159,7 +1171,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'CHANGE YOUR PREFERENCES',
                                       style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp.clamp(14, 20),
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1170,7 +1182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       text: TextSpan(
                                           text: 'Email Opt-Out Procedures: ',
                                           style: TextStyle(
-                                              fontSize: 10.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                           children: const <TextSpan>[
@@ -1190,7 +1202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       text: TextSpan(
                                           text: 'Update Profile Information: ',
                                           style: TextStyle(
-                                              fontSize: 10.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                           children: <TextSpan>[
@@ -1231,7 +1243,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'CONTACT US',
                                       style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp.clamp(14, 20),
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1243,7 +1255,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           text:
                                               'To contact us regarding these Terms and our related privacy practices, please visit the Contact Us page at ',
                                           style: TextStyle(
-                                              fontSize: 10.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.black),
                                           children: <TextSpan>[
                                             TextSpan(
@@ -1272,7 +1284,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     Text(
                                       'Terms of Service last revised: January 2020',
                                       style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize: 12.sp.clamp(14, 20),
                                         color: Colors.black,
                                       ),
                                     ),
@@ -1313,8 +1325,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                           ),
                                         ),
                                         child: Text(
-                                          'I reject',
-                                          style: TextStyle(fontSize: 12.sp),
+                                          'I reject'.toUpperCase(),
+                                          style: TextStyle(
+                                            fontSize: 12.sp.clamp(14, 20),
+                                          ),
                                         )),
                                     SizedBox(
                                       width: 5.sp,
@@ -1344,9 +1358,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                           ),
                                         ),
                                         child: Text(
-                                          'I accept',
+                                          'I accept'.toUpperCase(),
                                           style: TextStyle(
-                                              fontSize: 12.sp,
+                                              fontSize: 12.sp.clamp(14, 20),
                                               color: Colors.white),
                                         ))
                                   ],

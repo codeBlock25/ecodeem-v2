@@ -2,6 +2,7 @@ export 'app_header.dart';
 export 'category_btn.dart';
 export 'indicator.dart';
 export 'inner_shadow.dart';
+export 'line.dart';
 export 'list.dart';
 export 'message_widget.dart';
 export 'messages_widget.dart';

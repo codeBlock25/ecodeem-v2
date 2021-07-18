@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:ecodeem/api/api.dart';
-import 'package:ecodeem/api/user_login_details.dart';
 import 'package:ecodeem/config/api_config.dart';
 import 'package:ecodeem/routes/page_route.dart';
 import 'package:ecodeem/styles/styles.dart';
@@ -36,28 +35,30 @@ Future<void> registerUser(
           ),
         ));
     await _dio.post('${Api.url}/user/signup', data: <String, dynamic>{
-      'firstName': firstName.text,
-      'lastName': lastName.text,
-      'username': username.text,
-      'email': email.text,
-      'password': password.text,
-      'phoneNumber': phoneNumber.text,
-      'country': country.text,
-      'state': state.text,
+      'firstName': firstName.text.trim(),
+      'lastName': lastName.text.trim(),
+      'username': username.text.trim(),
+      'email': email.text.trim(),
+      'password': password.text.trim(),
+      'phoneNumber': phoneNumber.text.trim(),
+      'country': country.text.trim(),
+      'state': state.text.trim(),
       'interest': interestID
     }).then((Response<dynamic> value) {
       Get.back();
       _box.write('isOld', true);
       const SnackBar snackBar = SnackBar(
         content: Text(
-          'Your account has been been created successful, please provide to logging in.',
+          'Your account has been created successful, please proceed to verify your account.',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: primaryColor,
         duration: Duration(seconds: 5),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Get.toNamed(AppPageRoute.authLogin);
+      formKey.currentState!.save();
+      Get.toNamed(AppPageRoute.verifyByEmail,
+          arguments: <String, String>{'email': email.text.trim()});
     }).catchError((dynamic error) {
       Get.back();
       if (error.runtimeType == DioError) {
@@ -106,39 +107,45 @@ Future<void> loginUser(
           ),
         ));
     await _dio.post('${Api.url}/user/signin', data: <String, dynamic>{
-      'email': email.text,
-      'password': password.text,
+      'email': email.text.trim(),
+      'password': password.text.trim(),
     }).then((Response<dynamic> value) async {
       final Map<String, dynamic> _d = (value.data!['data']['user']
           as Map<String, dynamic>)
         ..addAll(<String, dynamic>{'token': value.data!['data']['token']});
-      final ActiveUser _activeUser = ActiveUser.fromJson(_d);
-      _activeUserController.user = _activeUser;
+      final CurrentUser _activeUser = CurrentUser.fromJson(_d);
+      _activeUserController.currentUser = _activeUser;
       final UserLoginDetails _userDetails =
           UserLoginDetails.fromJson(<String, dynamic>{
-        'email': email.text,
-        'password': password.text,
+        'email': email.text.trim(),
+        'password': password.text.trim(),
       });
       await _box.write('user', _userDetails.toJson());
       Get.back();
-      const SnackBar snackBar = SnackBar(
+      final SnackBar snackBar = SnackBar(
         content: Text(
-          'Welcome back!',
-          style: TextStyle(color: Colors.white),
+          'Welcome back ${_activeUser.username}!',
+          style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: primaryColor,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      formKey.currentState!.save();
       Get.offAllNamed(AppPageRoute.home, arguments: <String, dynamic>{
         'userDetails': _activeUserController.user
       });
-      // if (!_activeUser.isVerified) {
-      //   Get.toNamed(AppPageRoute.verifyByEmail);
-      // }
-    }).catchError((dynamic error) {
+    }).catchError((dynamic error) async {
       Get.back();
       if (error.runtimeType == DioError) {
         final DioError err = error as DioError;
+        if (err.response!.data['message']
+            .toString()
+            .contains('not yet being')) {
+          await resendVerificationCode(
+              email: email.text.trim(), context: context);
+          Get.toNamed(AppPageRoute.verifyByEmail,
+              arguments: <String, String>{'email': email.text.trim()});
+        }
         final SnackBar snackBar = SnackBar(
           content: Text(
             err.response!.data['message'].toString(),
@@ -180,15 +187,73 @@ Future<void> resendVerificationCode(
   await _dio.post('${Api.url}/user/resend-otp', data: <String, dynamic>{
     'email': email ?? (_activeUserController.user?.email ?? ''),
   }).then((Response<dynamic> value) {
-    // final Map<String, dynamic> _d = (value.data!['data']['user']
-    //     as Map<String, dynamic>)
-    //   ..addAll(<String, dynamic>{'token': value.data!['data']['token']});
-    // final ActiveUser _activeUser = ActiveUser.fromJson(_d);
-    // _activeUserController.user = _activeUser;
-    // Get.back();
-    // if (!_activeUser.isVerified) {
-    //   Get.toNamed(AppPageRoute.verifyByEmail);
-    // }
+    Get.back();
+    const SnackBar snackBar = SnackBar(
+      content: Text(
+        'Your request has been made and your one time code has been sent to your mail.',
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: primaryColor,
+      duration: Duration(seconds: 5),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }).catchError((dynamic error) {
+    Get.back();
+    if (error.runtimeType == DioError) {
+      final DioError err = error as DioError;
+      final SnackBar snackBar = SnackBar(
+        content: Text(
+          err.response!.data['message'].toString(),
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
+    const SnackBar snackBar = SnackBar(
+      content: Text(
+        'Network Error',
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  });
+}
+
+Future<void> verifyAccount(
+    {required String email,
+    required TextEditingController verificationCode,
+    required BuildContext context}) async {
+  final Dio _dio = Dio();
+  final GetStorage _box = GetStorage();
+  Get.defaultDialog(
+      title: 'Loading...',
+      backgroundColor: Colors.white,
+      barrierDismissible: false,
+      titleStyle: TextStyle(fontSize: 14.sp, color: primaryColor),
+      content: const Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
+          strokeWidth: 3,
+        ),
+      ));
+  await _dio.post('${Api.url}/user/verify', data: <String, dynamic>{
+    'email': email,
+    'confirmCode': verificationCode.text
+  }).then((Response<dynamic> value) {
+    _box.write('isOld', true);
+    const SnackBar snackBar = SnackBar(
+      content: Text(
+        'Your account has been verified successful, please proceed to login your account.',
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: primaryColor,
+      duration: Duration(seconds: 5),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Get.toNamed(AppPageRoute.authLogin);
   }).catchError((dynamic error) {
     Get.back();
     if (error.runtimeType == DioError) {

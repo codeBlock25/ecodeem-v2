@@ -1,178 +1,151 @@
-/// settings : {"canLoginWithBio":false,"canPush":false,"rememberLogin":false,"lowData":false,"backgroundMode":false}
+/// settings : {'canLoginWithBio':false,'canPush':false,'rememberLogin':false,'lowData':false,'backgroundMode':false}
 /// interests : []
 /// isActive : true
 /// isVerified : true
 /// accountConfirm : true
-/// ipAddress : "41.190.27.98"
-/// avatar : ""
-/// bio : ""
-/// _id : "60f21bb754f66800156d41d2"
-/// firstName : "Amos"
-/// lastName : "Daniel"
-/// username : "classic d"
-/// email : "jamesadam.business@gmail.com"
-/// phoneNumber : "07013891444"
-/// country : "Nigeria"
-/// state : "Abuja"
-/// referralCode : "eco-amos-332747"
-/// appID : "70b8a71f7a3762b4-eco-564727c63d86d5-381c843a80"
+/// ipAddress : '41.190.27.98'
+/// avatar : '
+/// bio : '
+/// _id : '60f21bb754f66800156d41d2'
+/// firstName : 'Amos'
+/// lastName : 'Daniel'
+/// username : 'classic d'
+/// email : 'jamesadam.business@gmail.com'
+/// phoneNumber : '07013891444'
+/// country : 'Nigeria'
+/// state : 'Abuja'
+/// referralCode : 'eco-amos-332747'
+/// appID : '70b8a71f7a3762b4-eco-564727c63d86d5-381c843a80'
 /// confirmationCode : null
-/// date : "2021-07-16T23:52:23.551Z"
-/// createdAt : "2021-07-16T23:52:23.552Z"
-/// updatedAt : "2021-07-16T23:58:31.817Z"
+/// date : '2021-07-16T23:52:23.551Z'
+/// createdAt : '2021-07-16T23:52:23.552Z'
+/// updatedAt : '2021-07-16T23:58:31.817Z'
 /// __v : 4
+import 'package:ecodeem/api/api.dart';
+import 'package:ecodeem/utility/utility.dart';
+import 'package:get/get.dart';
 
 class CurrentUser {
-  Settings? settings;
-  List<dynamic>? interests;
-  bool? isActive;
-  bool? isVerified;
-  bool? accountConfirm;
-  String? ipAddress;
-  String? avatar;
-  String? bio;
-  String? id;
-  String? firstName;
-  String? lastName;
-  String? username;
-  String? email;
-  String? phoneNumber;
-  String? country;
-  String? state;
-  String? referralCode;
-  String? appID;
-  dynamic? confirmationCode;
-  String? date;
-  String? createdAt;
-  String? updatedAt;
-  int? v;
-
-  CurrentUser({
-      this.settings, 
-      this.interests, 
-      this.isActive, 
-      this.isVerified, 
-      this.accountConfirm, 
-      this.ipAddress, 
-      this.avatar, 
-      this.bio, 
-      this.id, 
-      this.firstName, 
-      this.lastName, 
-      this.username, 
-      this.email, 
-      this.phoneNumber, 
-      this.country, 
-      this.state, 
-      this.referralCode, 
-      this.appID, 
-      this.confirmationCode, 
-      this.date, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.v});
+  CurrentUser(
+      {required this.settings,
+      required this.interests,
+      required this.isActive,
+      required this.isVerified,
+      required this.accountConfirm,
+      required this.ipAddress,
+      required this.avatar,
+      required this.bio,
+      required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.username,
+      required this.email,
+      required this.phoneNumber,
+      required this.country,
+      required this.state,
+      required this.token,
+      required this.referralCode,
+      required this.appID,
+      this.confirmationCode,
+      required this.date,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.v});
 
   CurrentUser.fromJson(dynamic json) {
-    settings = json["settings"] != null ? Settings.fromJson(json["settings"]) : null;
-    if (json["interests"] != null) {
-      interests = [];
-      json["interests"].forEach((v) {
-        interests?.add(dynamic.fromJson(v));
+    settings = Settings.fromJson(json['settings']);
+    if (json['interests'] != null) {
+      interests = <dynamic>[];
+      json['interests'].forEach((dynamic v) {
+        interests.add(v);
       });
     }
-    isActive = json["isActive"];
-    isVerified = json["isVerified"];
-    accountConfirm = json["accountConfirm"];
-    ipAddress = json["ipAddress"];
-    avatar = json["avatar"];
-    bio = json["bio"];
-    id = json["_id"];
-    firstName = json["firstName"];
-    lastName = json["lastName"];
-    username = json["username"];
-    email = json["email"];
-    phoneNumber = json["phoneNumber"];
-    country = json["country"];
-    state = json["state"];
-    referralCode = json["referralCode"];
-    appID = json["appID"];
-    confirmationCode = json["confirmationCode"];
-    date = json["date"];
-    createdAt = json["createdAt"];
-    updatedAt = json["updatedAt"];
-    v = json["__v"];
+    isActive = json['isActive'] as bool;
+    isVerified = json['isVerified'] as bool;
+    accountConfirm = json['accountConfirm'] as bool;
+    ipAddress = json['ipAddress'].toString();
+    avatar = json['avatar'].toString();
+    bio = json['bio'].toString();
+    id = json['_id'].toString();
+    firstName = json['firstName'].toString();
+    lastName = json['lastName'].toString();
+    username = json['username'].toString();
+    email = json['email'].toString();
+    token = json['token'].toString();
+    phoneNumber = json['phoneNumber'].toString();
+    country = json['country'].toString();
+    state = json['state'].toString();
+    referralCode = json['referralCode'].toString();
+    appID = json['appID'].toString();
+    confirmationCode = json['confirmationCode'];
+    date = json['date'].toString().toDate();
+    createdAt = json['createdAt'].toString().toDate();
+    updatedAt = json['updatedAt'].toString().toDate();
+    v = json['__v'] as int;
   }
+
+  late Settings settings;
+  late List<dynamic> interests;
+  late bool isActive;
+  late bool isVerified;
+  late bool accountConfirm;
+  late String ipAddress;
+  late String avatar;
+  late String bio;
+  late String id;
+  late String firstName;
+  late String lastName;
+  late String username;
+  late String email;
+  late String token;
+  late String phoneNumber;
+  late String country;
+  late String state;
+  late String referralCode;
+  late String appID;
+  dynamic confirmationCode;
+  late DateTime date;
+  late DateTime createdAt;
+  late DateTime updatedAt;
+  late int v;
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    if (settings != null) {
-      map["settings"] = settings?.toJson();
-    }
-    if (interests != null) {
-      map["interests"] = interests?.map((v) => v.toJson()).toList();
-    }
-    map["isActive"] = isActive;
-    map["isVerified"] = isVerified;
-    map["accountConfirm"] = accountConfirm;
-    map["ipAddress"] = ipAddress;
-    map["avatar"] = avatar;
-    map["bio"] = bio;
-    map["_id"] = id;
-    map["firstName"] = firstName;
-    map["lastName"] = lastName;
-    map["username"] = username;
-    map["email"] = email;
-    map["phoneNumber"] = phoneNumber;
-    map["country"] = country;
-    map["state"] = state;
-    map["referralCode"] = referralCode;
-    map["appID"] = appID;
-    map["confirmationCode"] = confirmationCode;
-    map["date"] = date;
-    map["createdAt"] = createdAt;
-    map["updatedAt"] = updatedAt;
-    map["__v"] = v;
+    final Map<String, dynamic> map = <String, dynamic>{};
+    map['settings'] = settings.toJson();
+    map['interests'] = interests.map((dynamic v) => v.toJson()).toList();
+    map['isActive'] = isActive;
+    map['isVerified'] = isVerified;
+    map['accountConfirm'] = accountConfirm;
+    map['ipAddress'] = ipAddress;
+    map['avatar'] = avatar;
+    map['bio'] = bio;
+    map['_id'] = id;
+    map['firstName'] = firstName;
+    map['lastName'] = lastName;
+    map['username'] = username;
+    map['email'] = email;
+    map['token'] = token;
+    map['phoneNumber'] = phoneNumber;
+    map['country'] = country;
+    map['state'] = state;
+    map['referralCode'] = referralCode;
+    map['appID'] = appID;
+    map['confirmationCode'] = confirmationCode;
+    map['date'] = date;
+    map['createdAt'] = createdAt;
+    map['updatedAt'] = updatedAt;
+    map['__v'] = v;
     return map;
   }
-
 }
 
-/// canLoginWithBio : false
-/// canPush : false
-/// rememberLogin : false
-/// lowData : false
-/// backgroundMode : false
-
-class Settings {
-  bool? canLoginWithBio;
-  bool? canPush;
-  bool? rememberLogin;
-  bool? lowData;
-  bool? backgroundMode;
-
-  Settings({
-      this.canLoginWithBio, 
-      this.canPush, 
-      this.rememberLogin, 
-      this.lowData, 
-      this.backgroundMode});
-
-  Settings.fromJson(dynamic json) {
-    canLoginWithBio = json["canLoginWithBio"];
-    canPush = json["canPush"];
-    rememberLogin = json["rememberLogin"];
-    lowData = json["lowData"];
-    backgroundMode = json["backgroundMode"];
+class ActiveUserController extends GetxController {
+  CurrentUser? user;
+  CurrentUser? get currentUser {
+    return user;
   }
 
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["canLoginWithBio"] = canLoginWithBio;
-    map["canPush"] = canPush;
-    map["rememberLogin"] = rememberLogin;
-    map["lowData"] = lowData;
-    map["backgroundMode"] = backgroundMode;
-    return map;
+  set currentUser(CurrentUser? newUser) {
+    user = newUser;
   }
-
 }

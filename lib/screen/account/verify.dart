@@ -1,3 +1,4 @@
+import 'package:ecodeem/api/api.dart';
 import 'package:ecodeem/components/components.dart';
 import 'package:ecodeem/styles/styles.dart';
 import 'package:flutter/gestures.dart';
@@ -34,25 +35,6 @@ class _VerificationPageState extends State<VerificationPage> {
   @override
   void initState() {
     super.initState();
-  }
-
-  void _showSnackBar(String pin, BuildContext context) {
-    final SnackBar snackBar = SnackBar(
-      duration: const Duration(seconds: 3),
-      content: SizedBox(
-        height: 80.0,
-        child: Center(
-          child: Text(
-            'Pin Submitted. Value: $pin',
-            style: const TextStyle(fontSize: 25.0),
-          ),
-        ),
-      ),
-      backgroundColor: Colors.deepPurpleAccent,
-    );
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(snackBar);
   }
 
   @override
@@ -113,14 +95,19 @@ class _VerificationPageState extends State<VerificationPage> {
                 ),
               ),
               Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 25.sp, vertical: 20.sp),
+                padding: EdgeInsets.symmetric(
+                    horizontal: 25.sp.clamp(20, 50),
+                    vertical: 20.sp.clamp(20, 40)),
                 child: Form(
                   key: _formKey,
                   child: PinPut(
                     fieldsCount: 6,
                     focusNode: _pinPutFocusNode,
                     controller: pinInputController,
+                    onChanged: (String? val) {
+                      if (val == null) return;
+                      setState(() {});
+                    },
                     submittedFieldDecoration: _pinPutDecoration.copyWith(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
@@ -146,26 +133,35 @@ class _VerificationPageState extends State<VerificationPage> {
               const Spacer(),
               Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.sp),
-                  child: TextButton(
-                    onPressed: () {
-                      Get.toNamed('/dashboard');
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        primaryColor,
-                      ),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40.sp),
+                  padding: EdgeInsets.symmetric(vertical: 20.sp.clamp(20, 40)),
+                  child: IgnorePointer(
+                    ignoring: pinInputController.text.length <= 5,
+                    child: Opacity(
+                      opacity: pinInputController.text.length <= 5 ? 0.4 : 1,
+                      child: TextButton(
+                        onPressed: () {
+                          verifyAccount(
+                              email: Get.arguments!['email'].toString(),
+                              verificationCode: pinInputController,
+                              context: context);
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(primaryColor),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40.sp),
+                            ),
+                          ),
+                          minimumSize:
+                              MaterialStateProperty.all(Size(250.sp, 40.sp)),
+                        ),
+                        child: Text(
+                          'Verify'.toUpperCase(),
+                          style:
+                              TextStyle(fontSize: 14.sp, color: Colors.white),
                         ),
                       ),
-                      minimumSize:
-                          MaterialStateProperty.all(Size(250.sp, 40.sp)),
-                    ),
-                    child: Text(
-                      'Verify'.toUpperCase(),
-                      style: TextStyle(fontSize: 14.sp, color: Colors.white),
                     ),
                   ),
                 ),
@@ -184,13 +180,15 @@ class _VerificationPageState extends State<VerificationPage> {
                             style: const TextStyle(color: primaryColor),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                debugPrint('hello');
+                                resendVerificationCode(
+                                    email: Get.arguments?['email'].toString(),
+                                    context: context);
                               })
                       ]),
                 ),
               ),
-              const SizedBox(
-                height: 50,
+              SizedBox(
+                height: 15.sp,
               ),
             ],
           ),

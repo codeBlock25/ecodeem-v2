@@ -1,5 +1,5 @@
 name: ecodeem
-description: Ecodeem is a platform for eco friendly platform for social and economic growth
+description: Ecodeem is a platform for eco friendly platform for social and economic growth.
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -14,20 +14,23 @@ dependencies:
   dio: ^4.0.0
   flutter:
     sdk: flutter
-  fluttertoast: ^8.0.7
   flutter_svg: ^0.22.0
+  flutter_vibrate: ^1.1.0
+  fluttertoast: ^8.0.7
   get: ^4.1.4
   get_storage: ^2.0.2
+  image_picker: ^0.8.2
   intl: ^0.17.0
   ionicons: ^0.1.2
   liquid_swipe: ^2.1.0
   local_auth: ^1.1.6
   persistent_bottom_nav_bar: ^4.0.2
   pinput: ^1.2.0
+  shimmer: ^2.0.0
   sizer: ^2.0.13
+  video_player: ^2.1.10
   unicons: ^2.0.1
   url_launcher: ^6.0.8
-
 
 dev_dependencies:
   flutter_test:

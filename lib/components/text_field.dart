@@ -38,7 +38,7 @@ class TextFieldWidget extends StatelessWidget {
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w500,
-              fontSize: 14.sp,
+              fontSize: 14.sp.clamp(14, 24),
             ),
           ),
         ),
@@ -50,14 +50,16 @@ class TextFieldWidget extends StatelessWidget {
               maxLength: maxLength,
               maxLines: maxLine,
               minLines: minLine,
-              style: TextStyle(fontSize: 12.sp),
+              style: TextStyle(
+                fontSize: 12.sp.clamp(12, 20),
+              ),
               autofillHints: autoComplete,
               obscuringCharacter: '*',
               obscureText: isHidden ?? false,
               decoration: decoration)
         else
           SizedBox(
-            height: 40.sp,
+            height: 40.sp.clamp(40, 60),
             child: TextFormField(
                 controller: textController,
                 keyboardType: keyboardType,
@@ -65,7 +67,9 @@ class TextFieldWidget extends StatelessWidget {
                 maxLength: maxLength,
                 maxLines: maxLine,
                 minLines: minLine,
-                style: TextStyle(fontSize: 12.sp),
+                style: TextStyle(
+                  fontSize: 12.sp.clamp(12, 20),
+                ),
                 autofillHints: autoComplete,
                 obscuringCharacter: '*',
                 obscureText: isHidden ?? false,

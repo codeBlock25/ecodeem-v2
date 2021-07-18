@@ -164,19 +164,21 @@ class _ActivityPickerState extends State<ActivityPickerScreen>
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 60.sp,
+                            height: 100.w < 500
+                                ? 100.sp.clamp(70, 120)
+                                : 60.sp.clamp(50, 70),
                           ),
                           if (index == 4)
                             Image.asset(
                               onBoardPages[index].image,
                               fit: BoxFit.fitHeight,
-                              height: 30.h,
+                              height: 30.h.clamp(300, 400),
                             )
                           else
                             Image.asset(
                               onBoardPages[index].image,
                               fit: BoxFit.fitWidth,
-                              width: 90.w,
+                              width: 80.w.clamp(300, 650),
                             ),
                           SizedBox(
                             height: 20.sp,
@@ -184,7 +186,7 @@ class _ActivityPickerState extends State<ActivityPickerScreen>
                           Text(
                             onBoardPages[index].titleText.capitalize!,
                             style: TextStyle(
-                                fontSize: 20.sp,
+                                fontSize: 24.sp.clamp(28, 40),
                                 fontWeight: FontWeight.w900,
                                 color: Colors.white),
                           ),
@@ -193,9 +195,9 @@ class _ActivityPickerState extends State<ActivityPickerScreen>
                             child: Text(
                               onBoardPages[index].contentText,
                               style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15.sp.clamp(20, 34),
                                   color: Colors.white70),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                           SizedBox(
@@ -218,88 +220,87 @@ class _ActivityPickerState extends State<ActivityPickerScreen>
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         SizedBox(
                           width: 10.sp,
                         ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 30.sp.clamp(40, 60),
-                            child: TextButton(
-                                onPressed: () {
-                                  Get.toNamed(AppPageRoute.interest);
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.white),
-                                    padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(
-                                          horizontal: 20.sp, vertical: 6.sp),
-                                    ),
-                                    shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50.sp)))),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Text(
-                                      'Get Started',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Icon(
-                                      UniconsLine.caret_right,
-                                      size: 16.sp,
-                                      color: Colors.black,
-                                    ),
-                                  ],
-                                )),
-                          ),
+                        SizedBox(
+                          width: 40.w.clamp(100, 300),
+                          height: 30.sp.clamp(40, 60),
+                          child: TextButton(
+                              onPressed: () {
+                                Get.toNamed(AppPageRoute.interest);
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                  padding: MaterialStateProperty.all(
+                                    EdgeInsets.symmetric(
+                                        horizontal: 20.sp, vertical: 6.sp),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50.sp)))),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Text(
+                                    'Get Started',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.sp.clamp(16, 22),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Icon(
+                                    UniconsLine.caret_right,
+                                    size: 16.sp.clamp(24, 30),
+                                    color: Colors.black,
+                                  ),
+                                ],
+                              )),
                         ),
                         SizedBox(
                           width: 10.sp,
                         ),
-                        Expanded(
-                          child: SizedBox(
-                            height: 30.sp.clamp(40, 60),
-                            child: TextButton(
-                                onPressed: () {
-                                  Get.toNamed(AppPageRoute.authLogin);
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.white),
-                                    padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(
-                                          horizontal: 20.sp, vertical: 6.sp),
-                                    ),
-                                    shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50.sp)))),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Text(
-                                      'Sign In',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Icon(
-                                      UniconsLine.user_circle,
-                                      size: 16.sp,
-                                      color: Colors.black,
-                                    ),
-                                  ],
-                                )),
-                          ),
+                        SizedBox(
+                          width: 40.w.clamp(100, 300),
+                          height: 30.sp.clamp(40, 60),
+                          child: TextButton(
+                              onPressed: () {
+                                Get.toNamed(AppPageRoute.authLogin);
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                  padding: MaterialStateProperty.all(
+                                    EdgeInsets.symmetric(
+                                        horizontal: 20.sp, vertical: 6.sp),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50.sp)))),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Text(
+                                    'Sign In',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.sp.clamp(16, 22),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Icon(
+                                    UniconsLine.user_circle,
+                                    size: 16.sp.clamp(24, 30),
+                                    color: Colors.black,
+                                  ),
+                                ],
+                              )),
                         ),
                         SizedBox(
                           width: 10.sp,
@@ -310,7 +311,7 @@ class _ActivityPickerState extends State<ActivityPickerScreen>
                       height: 10.sp,
                     ),
                     SizedBox(
-                      width: 170.sp.clamp(150, 400),
+                      width: 170.sp.clamp(150, 350),
                       height: 30.sp.clamp(40, 60),
                       child: TextButton(
                           onPressed: () {
@@ -334,12 +335,12 @@ class _ActivityPickerState extends State<ActivityPickerScreen>
                                 'Shop Now',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 12.sp,
+                                    fontSize: 12.sp.clamp(16, 22),
                                     fontWeight: FontWeight.bold),
                               ),
                               Icon(
                                 UniconsLine.shop,
-                                size: 16.sp,
+                                size: 16.sp.clamp(24, 30),
                                 color: Colors.black,
                               ),
                             ],

@@ -18,24 +18,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   final GetStorage _box = GetStorage();
   Future<void> load() async {
     final bool registerBefore = await _box.read('isOld') as bool? ?? false;
-    Future<void>.delayed(const Duration(seconds: 1), () {
-      if (registerBefore) {
-        Get.offAllNamed(AppPageRoute.authLogin);
-      } else {
-        Get.offAllNamed(AppPageRoute.activity);
-      }
-    });
+    if (registerBefore) {
+      Get.offAllNamed(AppPageRoute.authLogin);
+    } else {
+      Get.offAllNamed(AppPageRoute.activity);
+    }
   }
 
   @override
   void initState() {
+    super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown
     ]);
     load();
-    super.initState();
   }
 
   @override
@@ -48,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Image.asset(
         Assets.brandAppLogo,
         fit: BoxFit.fitWidth,
-        width: 70.sp,
+        width: 80.sp,
       )),
     ));
   }

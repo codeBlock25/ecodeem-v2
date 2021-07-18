@@ -26,7 +26,7 @@ class _SocialHomeState extends State<SocialHome> {
   final Dio _dio = Dio();
   Future<List<dynamic>> loadPosts({int page = 1}) async {
     List<dynamic> _posts = <dynamic>[];
-    final ActiveUser _activeUser = Get.arguments['userDetails'] as ActiveUser;
+    final CurrentUser _activeUser = Get.arguments['userDetails'] as CurrentUser;
     await _dio
         .get('${Api.url}/post/timeline',
             options: Options(headers: <String, dynamic>{
@@ -36,7 +36,6 @@ class _SocialHomeState extends State<SocialHome> {
       _posts =
           value.data['data']['timelinePosts'] as List<dynamic>? ?? <dynamic>[];
     }).catchError((dynamic error) {
-      print(error);
       if (error.runtimeType == DioError) {
         final DioError err = error as DioError;
         final SnackBar snackBar = SnackBar(
@@ -63,7 +62,7 @@ class _SocialHomeState extends State<SocialHome> {
 
   Future<List<dynamic>> loadInterests() async {
     List<dynamic> _interests = <dynamic>[];
-    final ActiveUser _activeUser = Get.arguments['userDetails'] as ActiveUser;
+    final CurrentUser _activeUser = Get.arguments['userDetails'] as CurrentUser;
     await _dio
         .get('${Api.url}/interest/user-all',
             options: Options(headers: <String, dynamic>{
@@ -73,7 +72,6 @@ class _SocialHomeState extends State<SocialHome> {
       _interests =
           value.data['data']['interests'] as List<dynamic>? ?? <dynamic>[];
     }).catchError((dynamic error) {
-      print(error);
       if (error.runtimeType == DioError) {
         final DioError err = error as DioError;
         final SnackBar snackBar = SnackBar(

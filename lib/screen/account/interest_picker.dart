@@ -43,7 +43,6 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
             Fluttertoast.showToast(
                 msg: 'Please pick an interest.',
                 toastLength: Toast.LENGTH_LONG,
-                timeInSecForIosWeb: 1,
                 backgroundColor: Colors.grey[100],
                 textColor: Colors.black,
                 fontSize: 10.sp);
@@ -54,7 +53,7 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
         label: const Icon(UniconsLine.angle_right),
         icon: Text(
           'NEXT',
-          style: TextStyle(fontSize: 12.sp, color: Colors.white),
+          style: TextStyle(fontSize: 12.sp.clamp(14, 18), color: Colors.white),
         ),
         backgroundColor: primaryColor,
       ),
@@ -70,8 +69,9 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
               children: <Widget>[
                 Text(
                   'Sign up your account\nSelect your interested',
-                  style:
-                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 16.sp.clamp(16, 28),
+                      fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -148,12 +148,12 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
                             });
                           },
                           child: SizedBox(
-                            width: 100.sp,
+                            width: 100.sp.clamp(150, 200),
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  width: 100.sp,
-                                  height: 100.sp,
+                                  width: 100.sp.clamp(150, 200),
+                                  height: 100.sp.clamp(150, 200),
                                   padding: EdgeInsets.all(10.sp),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5.sp),
@@ -172,7 +172,8 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
                                 ),
                                 Text(
                                   e.interest,
-                                  style: TextStyle(fontSize: 12.sp),
+                                  style:
+                                      TextStyle(fontSize: 12.sp.clamp(14, 20)),
                                 ),
                               ],
                             ),

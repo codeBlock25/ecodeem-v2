@@ -1,15 +1,13 @@
-import 'dart:math';
-
 import 'package:ecodeem/api/api.dart';
 import 'package:ecodeem/components/app_header.dart';
 import 'package:ecodeem/components/text_field.dart';
 import 'package:ecodeem/generated/assets.dart';
-import 'package:ecodeem/logic/size.dart';
 import 'package:ecodeem/routes/page_route.dart';
 import 'package:ecodeem/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ionicons/ionicons.dart';
@@ -31,14 +29,29 @@ class _LoginPageState extends State<LoginPage> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool canCheckBiometrics = false;
   final GetStorage _box = GetStorage();
-  List<BiometricType> availableBiometrics = <BiometricType>[];
+  List<BiometricType>? availableBiometrics = <BiometricType>[];
   Future<void> authenticateWithBio() async {
     final bool didAuthenticate = await _localAuthentication.authenticate(
         localizedReason: 'Please authenticate to access your account.',
         biometricOnly: true);
     final Map<String, dynamic>? _rawDetail =
         await _box.read('user') as Map<String, dynamic>?;
+    final bool canVibrate = await Vibrate.canVibrate;
     if (_rawDetail == null) {
+      if (canVibrate) {
+        if (GetPlatform.isAndroid) {
+          final Iterable<Duration> pauses = <Duration>[
+            const Duration(milliseconds: 500),
+            const Duration(milliseconds: 1000),
+            const Duration(milliseconds: 500),
+          ];
+          Vibrate.vibrateWithPauses(pauses);
+          Vibrate.vibrate();
+        } else {
+          Vibrate.feedback(FeedbackType.warning);
+          Vibrate.vibrate();
+        }
+      }
       const SnackBar snackBar = SnackBar(
         content: Text(
           'You have to Login at least once to use bio-metric auth',
@@ -51,9 +64,24 @@ class _LoginPageState extends State<LoginPage> {
     }
     final UserLoginDetails _userLoginDetails =
         UserLoginDetails.fromJson(_rawDetail);
-    userDetailController.text = _userLoginDetails.email;
-    passwordController.text = _userLoginDetails.password;
     if (didAuthenticate) {
+      if (canVibrate) {
+        if (GetPlatform.isAndroid) {
+          final Iterable<Duration> _pauses = <Duration>[
+            const Duration(milliseconds: 500),
+            const Duration(milliseconds: 1000),
+            const Duration(milliseconds: 2000),
+            const Duration(milliseconds: 500),
+          ];
+          Vibrate.vibrateWithPauses(_pauses);
+          Vibrate.vibrate();
+        } else {
+          Vibrate.feedback(FeedbackType.success);
+          Vibrate.vibrate();
+        }
+      }
+      userDetailController.text = _userLoginDetails.email;
+      passwordController.text = _userLoginDetails.password;
       loginUser(
           formKey: _formKey,
           email: userDetailController,
@@ -87,7 +115,6 @@ class _LoginPageState extends State<LoginPage> {
   bool isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {
-    final double width = trueWidth(MediaQuery.of(context));
     return Scaffold(
       appBar: buildAppHeaderWithBackBtn(),
       body: GestureDetector(
@@ -107,22 +134,22 @@ class _LoginPageState extends State<LoginPage> {
                     height: 50,
                   ),
                   Container(
-                    width: width / 2.3,
-                    height: width / 2.3,
+                    width: (100.w / 2.3).clamp(150, 220),
+                    height: (100.w / 2.3).clamp(150, 220),
                     margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(width),
+                      borderRadius: BorderRadius.circular(100.w),
                       border: Border.all(color: Colors.white, width: 20),
                     ),
                     child: Container(
                       margin: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(width),
+                          borderRadius: BorderRadius.circular(100.w),
                           color: const Color(0xFFE6F5D5)),
                       child: Center(
                         child: Icon(
                           Ionicons.person,
-                          size: width / 8,
+                          size: 30.sp.clamp(50, 100),
                           color: primaryColor,
                         ),
                       ),
@@ -133,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                       'welcome back!'.toUpperCase(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: width / 18.89,
+                        fontSize: 20.sp.clamp(20, 30),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -161,13 +188,13 @@ class _LoginPageState extends State<LoginPage> {
                                   margin: EdgeInsets.all(3.sp)
                                       .copyWith(right: 5.sp),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5.sp),
+                                      borderRadius: BorderRadius.circular(
+                                          5.sp.clamp(2, 5)),
                                       color: Colors.grey[200]),
-                                  child: availableBiometrics.first ==
-                                          BiometricType.face
+                                  child: GetPlatform.isIOS
                                       ? Image.asset(
                                           Assets.iconsFaceId,
-                                          width: 16.sp,
+                                          width: 16.sp.clamp(14, 20),
                                           fit: BoxFit.fitWidth,
                                         )
                                       : Icon(
@@ -232,10 +259,11 @@ class _LoginPageState extends State<LoginPage> {
                   RichText(
                     text: TextSpan(
                         text: 'Forgot your password? ',
-                        style: const TextStyle(
-                            color: Color(0xfF393939),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14),
+                        style: TextStyle(
+                          color: const Color(0xfF393939),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.sp.clamp(12, 20),
+                        ),
                         children: <TextSpan>[
                           TextSpan(
                               text: 'Click here',
@@ -271,13 +299,15 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          minimumSize: MaterialStateProperty.all(
-                              Size(min(width / 1.656, 500), 50))),
+                          minimumSize: MaterialStateProperty.all(Size(
+                            60.w.clamp(200, 350),
+                            40.sp.clamp(50, 80),
+                          ))),
                       child: Text(
                         'LOGIN',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: width / 29.89,
+                            fontSize: 14.sp.clamp(14, 24),
                             fontWeight: FontWeight.bold),
                       )),
                   const SizedBox(
@@ -286,10 +316,11 @@ class _LoginPageState extends State<LoginPage> {
                   RichText(
                     text: TextSpan(
                         text: "Don't have an account? ",
-                        style: const TextStyle(
-                            color: Color(0xfF393939),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14),
+                        style: TextStyle(
+                          color: const Color(0xfF393939),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.sp.clamp(12, 20),
+                        ),
                         children: <TextSpan>[
                           TextSpan(
                               text: 'Register',

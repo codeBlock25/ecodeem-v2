@@ -8,7 +8,7 @@ import 'package:ecodeem/screen/account_home/account_home.dart';
 import 'package:ecodeem/screen/account_home/setting.dart';
 import 'package:ecodeem/screen/home/app.dart';
 import 'package:ecodeem/screen/launch/activity_picker.dart';
-import 'package:ecodeem/screen/launch/welcome.dart';
+import 'package:ecodeem/screen/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,11 +31,11 @@ class AppPageRoute {
 
   static List<GetPage<GetPageRoute<Widget>>> pages =
       <GetPage<GetPageRoute<Widget>>>[
-    GetPage<GetPageRoute<WelcomeScreen>>(
+    GetPage<GetPageRoute<Widget>>(
         name: AppPageRoute.init, page: () => const WelcomeScreen()),
-    GetPage<GetPageRoute<WelcomeScreen>>(
+    GetPage<GetPageRoute<Widget>>(
         name: AppPageRoute.interest, page: () => const InterestPickerPage()),
-    GetPage<GetPageRoute<WelcomeScreen>>(
+    GetPage<GetPageRoute<Widget>>(
         name: AppPageRoute.accountGeneralView,
         page: () => const GeneralPageView()),
     GetPage<GetPageRoute<Widget>>(

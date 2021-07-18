@@ -16,11 +16,11 @@ class AccountHome extends StatefulWidget {
 }
 
 class _AccountHomeState extends State<AccountHome> {
-  ActiveUser? _activeUser;
+  CurrentUser? _activeUser;
   // final GetStorage _box = GetStorage();
   Future<void> load() async {
     setState(() {
-      _activeUser = Get.arguments['userDetails'] as ActiveUser;
+      _activeUser = Get.arguments['userDetails'] as CurrentUser;
     });
   }
 
