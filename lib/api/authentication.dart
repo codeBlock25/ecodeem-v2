@@ -18,7 +18,7 @@ Future<void> registerUser(
     required TextEditingController phoneNumber,
     required TextEditingController country,
     required TextEditingController state,
-    required String interestID,
+    required List<String> interestID,
     required BuildContext context}) async {
   final Dio _dio = Dio();
   final GetStorage _box = GetStorage();
@@ -43,7 +43,8 @@ Future<void> registerUser(
       'phoneNumber': phoneNumber.text.trim(),
       'country': country.text.trim(),
       'state': state.text.trim(),
-      'interest': interestID
+      'interests': interestID,
+      'bio': 'Hi, I am a user of Ecodeem'
     }).then((Response<dynamic> value) {
       Get.back();
       _box.write('isOld', true);

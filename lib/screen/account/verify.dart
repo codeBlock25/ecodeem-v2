@@ -18,6 +18,7 @@ class _VerificationPageState extends State<VerificationPage> {
   TextEditingController pinInputController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _pinPutFocusNode = FocusNode();
+  String email = '';
 
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
@@ -35,10 +36,14 @@ class _VerificationPageState extends State<VerificationPage> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      email = Get.arguments['email'].toString();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final EdgeInsets _padding = MediaQuery.of(context).padding;
     return Scaffold(
       appBar: buildAppHeaderWithBackBtn(),
       body: GestureDetector(
@@ -72,7 +77,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   padding: EdgeInsets.symmetric(horizontal: 30.sp)
                       .copyWith(top: 20.sp),
                   child: Text(
-                    'We have sent the code verification to Your Email Address ',
+                    'We have sent the code verification to Your Email Address \n$email',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: const Color(0xff5A5A5A),
@@ -188,7 +193,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 ),
               ),
               SizedBox(
-                height: 15.sp,
+                height: _padding.bottom + 5.sp,
               ),
             ],
           ),

@@ -9,6 +9,7 @@ import 'package:ecodeem/components/components.dart';
 import 'package:ecodeem/config/config.dart';
 import 'package:ecodeem/styles/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:image_picker/image_picker.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -37,15 +38,27 @@ class _PostScreenState extends State<PostScreen>
   XFile? videoFile;
   bool isPlaying = false;
 
-  VideoPlayerController? _videoPlayerController;
+  late VideoPlayerController? _videoPlayerController;
 
   Future<void> getImage() async {
-    final XFile? _image = await _picker.pickImage(source: ImageSource.gallery);
-    if (_image == null) return;
-    setState(() {
-      isImage = true;
-      imageFile = _image;
-    });
+    try {
+      final XFile? _image =
+          await _picker.pickImage(source: ImageSource.gallery);
+      if (_image == null) return;
+      setState(() {
+        isImage = true;
+        imageFile = _image;
+      });
+    } catch (e) {
+      final SnackBar snackBar = SnackBar(
+        content: Text(
+          e.toString(),
+          style: TextStyle(color: Colors.white, fontSize: 12.sp),
+        ),
+        backgroundColor: Colors.red,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   Future<void> getVideo() async {
@@ -416,6 +429,9 @@ class _PostScreenState extends State<PostScreen>
                         ],
                       ),
                     ),
+                  SizedBox(
+                    height: 10.sp.clamp(10, 20),
+                  ),
                   if (videoFile != null && isImage == false)
                     _videoPlayerController!.value.isInitialized
                         ? SizedBox(
@@ -715,12 +731,28 @@ class _PostScreenState extends State<PostScreen>
                         onPressed: () {
                           FocusScope.of(context).unfocus();
                           uploadPost(
-                              formKey: _formKey,
-                              postDesc: _postTextController,
-                              interest: selectInterests,
-                              activeUser: _activeUser,
-                              controller: widget.controller,
-                              context: context);
+                                  formKey: _formKey,
+                                  postDesc: _postTextController,
+                                  interest: selectInterests,
+                                  activeUser: _activeUser,
+                                  controller: widget.controller,
+                                  file: isImage && imageFile != null
+                                      ? imageFile
+                                      : videoFile,
+                                  postType: isImage && imageFile != null
+                                      ? PostType.image
+                                      : !isImage && videoFile != null
+                                          ? PostType.video
+                                          : PostType.text,
+                                  context: context)
+                              .then((dynamic value) => {
+                                    setState(() {
+                                      isImage = false;
+                                      imageFile = null;
+                                      videoFile = null;
+                                      selectInterests = null;
+                                    })
+                                  });
                         },
                         style: ButtonStyle(
                             backgroundColor:

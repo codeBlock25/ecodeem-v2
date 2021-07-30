@@ -81,10 +81,10 @@ class Interest {
 }
 
 class InterestController extends GetxController {
-  Interest? selectedInterest;
+  List<Interest> selectedInterest = <Interest>[];
   List<Interest>? interest;
 
-  Interest? get selected {
+  List<Interest> get selected {
     return selectedInterest;
   }
 
@@ -98,7 +98,23 @@ class InterestController extends GetxController {
     }
   }
 
-  set selected(Interest? data) {
+  List<String> interestIDs() {
+    final List<String> interestsIds = <String>[];
+    for (final Interest i in selectedInterest) {
+      interestsIds.add(i.sId);
+    }
+    return interestsIds;
+  }
+
+  void addInterest(Interest newInterest) {
+    if (selectedInterest.contains(newInterest)) {
+      selectedInterest.remove(newInterest);
+      return;
+    }
+    selectedInterest.add(newInterest);
+  }
+
+  set selected(List<Interest> data) {
     selectedInterest = data;
   }
 
@@ -110,4 +126,3 @@ class InterestController extends GetxController {
     interest = data;
   }
 }
-

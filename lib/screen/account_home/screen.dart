@@ -83,7 +83,7 @@ class _AccountScreenState extends State<AccountScreen> {
               future: profileDetails,
               builder: (BuildContext context,
                   AsyncSnapshot<Map<String, dynamic>?> snapShot) {
-                UserProfile? _userProfile = snapShot.data == null
+                final UserProfile? _userProfile = snapShot.data == null
                     ? null
                     : snapShot.data!.isEmpty
                         ? null

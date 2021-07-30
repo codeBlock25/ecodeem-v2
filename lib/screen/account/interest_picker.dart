@@ -20,7 +20,7 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
   final InterestController _interestController = Get.put(InterestController());
   late Future<List<Interest>> _listInterest;
   Future<void> load() async {
-    _interestController.selected = null;
+    _interestController.selected = <Interest>[];
     setState(() {
       _listInterest = Interest.getInterests(context);
     });
@@ -39,7 +39,7 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          if (_interestController.selected == null) {
+          if (_interestController.selected.isEmpty) {
             Fluttertoast.showToast(
                 msg: 'Please pick an interest.',
                 toastLength: Toast.LENGTH_LONG,
@@ -144,7 +144,7 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              _interestController.selected = e;
+                              _interestController.addInterest(e);
                             });
                           },
                           child: SizedBox(
@@ -157,10 +157,10 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
                                   padding: EdgeInsets.all(10.sp),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5.sp),
-                                    color: _interestController.selected?.sId ==
-                                            e.sId
-                                        ? primaryColor.withOpacity(0.5)
-                                        : Colors.grey[100],
+                                    color:
+                                        _interestController.selected.contains(e)
+                                            ? primaryColor.withOpacity(0.5)
+                                            : Colors.grey[100],
                                   ),
                                   child: Image.network(
                                     e.image,

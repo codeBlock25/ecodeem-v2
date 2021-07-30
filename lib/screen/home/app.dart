@@ -83,7 +83,6 @@ class _AppHomeBuilderState extends State<AppHomeBuilder> {
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
-      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       decoration: NavBarDecoration(
         borderRadius: BorderRadius.circular(10.0),

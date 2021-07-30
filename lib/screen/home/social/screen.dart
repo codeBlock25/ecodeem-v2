@@ -24,13 +24,13 @@ class _SocialHomeState extends State<SocialHome> {
   Future<List<dynamic>>? interests;
   final InterestController _interestController = Get.put(InterestController());
   final Dio _dio = Dio();
+  late CurrentUser userDetails;
   Future<List<dynamic>> loadPosts({int page = 1}) async {
     List<dynamic> _posts = <dynamic>[];
-    final CurrentUser _activeUser = Get.arguments['userDetails'] as CurrentUser;
     await _dio
         .get('${Api.url}/post/timeline',
             options: Options(headers: <String, dynamic>{
-              'authorization': 'Bearer ${_activeUser.token}'
+              'authorization': 'Bearer ${userDetails.token}'
             }))
         .then((Response<dynamic> value) {
       _posts =
@@ -62,11 +62,10 @@ class _SocialHomeState extends State<SocialHome> {
 
   Future<List<dynamic>> loadInterests() async {
     List<dynamic> _interests = <dynamic>[];
-    final CurrentUser _activeUser = Get.arguments['userDetails'] as CurrentUser;
     await _dio
         .get('${Api.url}/interest/user-all',
             options: Options(headers: <String, dynamic>{
-              'authorization': 'Bearer ${_activeUser.token}'
+              'authorization': 'Bearer ${userDetails.token}'
             }))
         .then((Response<dynamic> value) {
       _interests =
@@ -100,6 +99,7 @@ class _SocialHomeState extends State<SocialHome> {
   void initState() {
     super.initState();
     setState(() {
+      userDetails = Get.arguments['userDetails'] as CurrentUser;
       posts = loadPosts();
       interests = loadInterests();
     });
