@@ -2,11 +2,10 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:ecodeem/api/api.dart';
-import 'package:ecodeem/api/interests.dart';
-import 'package:ecodeem/api/post.dart';
 import 'package:ecodeem/components/components.dart';
 import 'package:ecodeem/config/config.dart';
+import 'package:ecodeem/controller/controller.dart';
+import 'package:ecodeem/function/function.dart';
 import 'package:ecodeem/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -745,7 +744,7 @@ class _PostScreenState extends State<PostScreen>
                                           ? PostType.video
                                           : PostType.text,
                                   context: context)
-                              .then((dynamic value) => {
+                              .then((dynamic value) => <void>{
                                     setState(() {
                                       isImage = false;
                                       imageFile = null;

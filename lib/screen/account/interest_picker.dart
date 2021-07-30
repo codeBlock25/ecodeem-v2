@@ -1,5 +1,5 @@
-import 'package:ecodeem/api/api.dart';
 import 'package:ecodeem/components/components.dart';
+import 'package:ecodeem/controller/controller.dart';
 import 'package:ecodeem/routes/routes.dart';
 import 'package:ecodeem/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +68,7 @@ class _InterestPickerPageState extends State<InterestPickerPage> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Sign up your account\nSelect your interested',
+                  'Create your account\nSelect your interests',
                   style: TextStyle(
                       fontSize: 16.sp.clamp(16, 28),
                       fontWeight: FontWeight.bold),

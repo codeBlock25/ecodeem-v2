@@ -2,6 +2,7 @@ import 'package:ecodeem/api/api.dart';
 import 'package:ecodeem/components/app_header.dart';
 import 'package:ecodeem/components/components.dart';
 import 'package:ecodeem/components/text_field.dart';
+import 'package:ecodeem/controller/controller.dart';
 import 'package:ecodeem/routes/page_route.dart';
 import 'package:ecodeem/styles/colors.dart';
 import 'package:ecodeem/utility/utility.dart';
@@ -26,6 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
   TextEditingController country = TextEditingController();
   TextEditingController state = TextEditingController();
@@ -250,6 +252,37 @@ class _RegisterPageState extends State<RegisterPage> {
                               return null;
                             },
                             label: 'Password'),
+                        TextFieldWidget(
+                            textController: confirmPassword,
+                            keyboardType: TextInputType.visiblePassword,
+                            autoComplete: const <String>[
+                              AutofillHints.password
+                            ],
+                            isHidden: true,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter your password again',
+                              prefixIcon: SizedBox(
+                                width: 30,
+                                height: 30,
+                                child: Icon(Ionicons.lock_closed_outline,
+                                    color: darkBlue),
+                              ),
+                            ),
+                            validator: (String? value) {
+                              if (value == null) {
+                                return "This field can't empty";
+                              } else if (value.isEmpty) {
+                                return "This field can't empty";
+                              } else if (value != password.text) {
+                                return 'Password do not match.';
+                              } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                      .hasMatch(value) ||
+                                  !RegExp('[1-9]').hasMatch(value)) {
+                                return 'Password must contain a at least one number and special character';
+                              }
+                              return null;
+                            },
+                            label: 'Confirm Password'),
                         TextFieldWidget(
                             textController: country,
                             keyboardType: TextInputType.text,

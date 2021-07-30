@@ -1,6 +1,6 @@
-import 'package:ecodeem/api/api.dart';
-import 'package:ecodeem/api/user_profile.dart';
 import 'package:ecodeem/components/components.dart';
+import 'package:ecodeem/controller/controller.dart';
+import 'package:ecodeem/function/function.dart';
 import 'package:ecodeem/routes/page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;

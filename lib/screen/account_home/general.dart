@@ -1,5 +1,5 @@
-import 'package:ecodeem/api/gen_settings.dart';
 import 'package:ecodeem/components/components.dart';
+import 'package:ecodeem/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

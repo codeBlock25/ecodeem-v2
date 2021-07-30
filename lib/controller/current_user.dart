@@ -1,27 +1,4 @@
-/// settings : {'canLoginWithBio':false,'canPush':false,'rememberLogin':false,'lowData':false,'backgroundMode':false}
-/// interests : []
-/// isActive : true
-/// isVerified : true
-/// accountConfirm : true
-/// ipAddress : '41.190.27.98'
-/// avatar : '
-/// bio : '
-/// _id : '60f21bb754f66800156d41d2'
-/// firstName : 'Amos'
-/// lastName : 'Daniel'
-/// username : 'classic d'
-/// email : 'jamesadam.business@gmail.com'
-/// phoneNumber : '07013891444'
-/// country : 'Nigeria'
-/// state : 'Abuja'
-/// referralCode : 'eco-amos-332747'
-/// appID : '70b8a71f7a3762b4-eco-564727c63d86d5-381c843a80'
-/// confirmationCode : null
-/// date : '2021-07-16T23:52:23.551Z'
-/// createdAt : '2021-07-16T23:52:23.552Z'
-/// updatedAt : '2021-07-16T23:58:31.817Z'
-/// __v : 4
-import 'package:ecodeem/api/api.dart';
+import 'package:ecodeem/controller/setting.dart';
 import 'package:ecodeem/utility/utility.dart';
 import 'package:get/get.dart';
 
